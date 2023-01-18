@@ -132,5 +132,10 @@ Route::group(['middleware' => 'isAdmin'],function(){
 
     Route::post('/store/product-attribute',[App\Http\Controllers\ProductController::class,'product_attr'])->name('product.attribute');
 
+    Route::prefix('brand')->group(function(){
+    Route::get('/create',[App\Http\Controllers\BrandController::class,'create']);
+    Route::post('/store',[App\Http\Controllers\BrandController::class,'store'])->name('store.brand');
 
+
+});
 });
