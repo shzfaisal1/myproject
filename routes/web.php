@@ -133,8 +133,17 @@ Route::group(['middleware' => 'isAdmin'],function(){
     Route::post('/store/product-attribute',[App\Http\Controllers\ProductController::class,'product_attr'])->name('product.attribute');
 
     Route::prefix('brand')->group(function(){
-    Route::get('/create',[App\Http\Controllers\BrandController::class,'create']);
+    Route::get('/create',[App\Http\Controllers\BrandController::class,'create'])->name('create.brand');
     Route::post('/store',[App\Http\Controllers\BrandController::class,'store'])->name('store.brand');
+    Route::get('/list',[App\Http\Controllers\BrandController::class,'index'])->name('list.brand');
+    Route::get('/edit/{id}',[App\Http\Controllers\BrandController::class,'edit']);
+    Route::post('/update/{id}',[App\Http\Controllers\BrandController::class,'update'])->name('update.brand');
+
+    Route::get('/delete/{id}',[App\Http\Controllers\BrandController::class,'destroy']);
+
+    // for status (active/deactive)
+    Route::get('/status/{status_digit}/{id}',[App\Http\Controllers\BrandController::class,'status']);
+   
 
 
 });

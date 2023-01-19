@@ -14,7 +14,8 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+        $data=Brand::all();
+        return view('ecommerce.backend.admin.dashbord.brand.list',compact('data'));
     }
 
     /**
@@ -35,18 +36,19 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
+        $data=new Brand();
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $name = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/images');
-            $image->move($destinationPath, $name);
-            $image_url = '/images/'.$name;
-            // Save image_url to the database
+        if($request->file('image')){
+            $file= $request->file('image');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('public/brand_image'), $filename);
+            $data['image']= $filename;
         }
+        $data->name=$request->name;
+        $data->save();
         
         Brand::create($request->all());
-        return redirect('brand/create');
+        return redirect('brand/list')->with('added','brand has been added');
     }
 
     /**
@@ -55,9 +57,11 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function show(Brand $brand)
+    public function edit($id)
     {
-        //
+       $data=Brand::findorFail($id);
+       return view('ecommerce.backend.admin.dashbord.brand.edit',compact('data'));
+
     }
 
     /**
@@ -66,9 +70,20 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function edit(Brand $brand)
+    public function update(Request $request,$id)
     {
-        //
+        $data=Brand::findorFail($id);
+        if($request->file('image')){
+            $file= $request->file('image');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('public/brand_image'), $filename);
+            $data->image= $filename;
+        }
+        $data->name=$request->name;
+        $data->save();
+
+
+        return redirect('brand/list')->with('updated','Brand has been updated');
     }
 
     /**
@@ -78,10 +93,7 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Brand $brand)
-    {
-        //
-    }
+  
 
     /**
      * Remove the specified resource from storage.
@@ -89,8 +101,22 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Brand $brand)
+    public function destroy($id)
     {
-        //
+        $data=Brand::findorFail($id)->delete();
+        return redirect('brand/list')->with('deleted','Brand has been deleted');
+    }
+
+
+
+    public function status($id,$status_digit){
+       
+        $data=Brand::findorFail($id);
+        $data->status=$status_digit;
+
+        $data->save();
+
+        return redirect('brand/list')->with('status');
+
     }
 }

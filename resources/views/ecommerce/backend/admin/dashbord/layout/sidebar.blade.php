@@ -30,7 +30,11 @@
                         </li>
                         <li>
                             <a href="{{route('product.list')}}">
-                                <i class="fas fa-product"></i>PRODUCT</a>
+                                <i class="fas fa-tag"></i>PRODUCT</a>
+                        </li>
+                        <li>
+                            <a href="{{route('list.brand')}}">
+                                <i class="fas fa-tag"></i>BRAND</a>
                         </li>
                     </ul>
                 </nav>
