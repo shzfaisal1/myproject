@@ -88,7 +88,7 @@ Route::group(['middleware' => 'isAdmin'],function(){
 
     Route::prefix('size')->group(function(){
 
-        Route::get('/create',[App\Http\Controllers\SizeController::class,'create']);
+        Route::get('/create',[App\Http\Controllers\SizeController::class,'create'])->name('size.create');
         Route::get('/list',[App\Http\Controllers\SizeController::class,'index'])->name('size.list');
         Route::get('/delete/{id}',[App\Http\Controllers\SizeController::class,'destroy']);
         Route::get('/edit/{id}',[App\Http\Controllers\SizeController::class,'edit']);
@@ -104,7 +104,7 @@ Route::group(['middleware' => 'isAdmin'],function(){
 
     Route::prefix('color')->group(function(){
 
-        Route::get('/create',[App\Http\Controllers\ColorController::class,'create']);
+        Route::get('/create',[App\Http\Controllers\ColorController::class,'create'])->name('color.create');
         Route::get('/list',[App\Http\Controllers\ColorController::class,'index'])->name('color.list');
         Route::get('/delete/{id}',[App\Http\Controllers\ColorController::class,'destroy']);
         Route::get('/edit/{id}',[App\Http\Controllers\ColorController::class,'edit']);

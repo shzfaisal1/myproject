@@ -24,7 +24,7 @@
                                         @endif 
                                 <!-- DATA TABLE-->
                                 <div class="table-responsive m-b-40">
-                                <a href="{{route('create.category')}}"><button type="button" class="btn btn-success">Add Color </button></a>
+                                <a href="{{route('color.create')}}"><button type="button" class="btn btn-success">Add Color </button></a>
                                     <table class="table table-borderless table-data3">
                                         <thead>
                                             <tr>

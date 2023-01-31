@@ -71,7 +71,10 @@ class ProductController extends Controller
         // die;
 
         $input = $request->all();
-  
+//   dd($input);
+        //     echo "<pre>";
+        // print_r($input);
+        // die;
         if ($image = $request->file('image')) {
             $destinationPath = 'images/';
             $product_image_name = date('YmdHis') . "." . $image->getClientOriginalExtension();
@@ -113,6 +116,8 @@ class ProductController extends Controller
             
         }
         $product_attribute->product_id=$data->id;
+       
+
         $product_attribute->sku=$request->sku;
         $product_attribute->price=$request->price;
         $product_attribute->quantity=$request->quantity;
@@ -123,6 +128,8 @@ class ProductController extends Controller
 
 
         $product_Attribute_child_image =new product_Attribute_child_image();
+       
+       
         if($request->hasfile('product_Attribute_child_image')) {
             foreach($request->file('product_Attribute_child_image') as $file)
             {
@@ -132,13 +139,14 @@ class ProductController extends Controller
                 $imgData[] = $name;  
                
                
-                $product_Attribute_child_image->product_id=$data->id;
-                
-               
                 
             }
-        
+            $product_Attribute_child_image->product_id=$data->id;
+                
+            $product_Attribute_child_image->product_attr_id=$product_attribute->id;
+            $product_Attribute_child_image->product_attr_color_id= $product_attribute->color_id;
             $product_Attribute_child_image->product_attribute_child_image = json_encode($imgData);
+        
             $product_Attribute_child_image->save();
     
            
@@ -146,7 +154,7 @@ class ProductController extends Controller
        
 
 
-
+      
         
 
       

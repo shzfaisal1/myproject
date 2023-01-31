@@ -201,7 +201,13 @@
      </script>
  
      <!-- Main JS-->
-     <script src="{{asset('assets1/js/main.js')}}"></script>
+     <script src="{{asset('assets1/js/main.js')}}">
+
+       
+     </script>
+   
+ @yield('javascript')
+
 
 </body>
 
