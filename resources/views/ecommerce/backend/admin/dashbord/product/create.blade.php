@@ -212,6 +212,7 @@
 
 
         <center>
+            <!-- if there is multiple data to store use [] (its define it is an array) in name attribte  -->
         <h3 class="text-center title-2">Product Attribute</h3>
             <div class="col-lg-8">
                 

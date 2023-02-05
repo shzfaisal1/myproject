@@ -12,7 +12,7 @@ use DB;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Str;
 class ProductController extends Controller
 {
     /**
@@ -66,9 +66,6 @@ class ProductController extends Controller
 
 
 
-        // echo "<pre>";
-        // print_r($data);
-        // die;
 
         $input = $request->all();
 //   dd($input);
@@ -106,54 +103,97 @@ class ProductController extends Controller
         }
 
         // product_attribute
+
         $product_attribute=new product_attribute;
-        if ($image = $request->file('attribute_image')) {
-            $destinationPath = 'images/';
-            $product_attr_image_name = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $product_attr_image_name);
-            $product_attribute['attribute_image'] = "$product_attr_image_name";
+
+       
+
+        // dd($data->id);
+        $attribute_image=$request->attribute_image;
+        $product_Attribute_child_image=$request->product_Attribute_child_image;
+        $sku=$request->sku;
+        $price=$request->price;
+        $quantity=$request->quantity;
+        $size_id=$request->size_id;
+        $colour_id=$request->colour_id;
+
+        $product_attribute=array();
+
+         // through sku(data)[jitna sku rahega ustni bar run hoga]
+        if (is_array($sku) || is_object($sku))
+{
+
+   
+
+
+        foreach($sku as $key=>$value){
+
+            $product_attribute['product_id']=$data->id;
+            $product_attribute['sku']=$sku[$key];
+            $product_attribute['price']=$price[$key];
+            $product_attribute['quantity']=$quantity[$key];
+            $product_attribute['size_id']=$size_id[$key];
+            $product_attribute['color_id']=$colour_id[$key];
+
+            if($request->hasFile("attribute_image.$key")){
+                $rand=rand('111111111','999999999');
+                $attr_image=$request->file("attribute_image.$key");
+                $ext=$attr_image->extension();
+                 
+                $image_name=$rand.'.'.$ext;
+               
+                $request->file("attribute_image.$key")->storeAs('/public/media',$image_name);
+            $product_attribute['attribute_image']=$image_name;
+
+               
+            }
+            DB::table('product_attribute')->insert($product_attribute);
 
             
-        }
-        $product_attribute->product_id=$data->id;
-       
-
-        $product_attribute->sku=$request->sku;
-        $product_attribute->price=$request->price;
-        $product_attribute->quantity=$request->quantity;
-        $product_attribute->size_id=$request->size_id;
-        $product_attribute->color_id=$request->colour_id;
-
-        $product_attribute->save();
-
-
-        $product_Attribute_child_image =new product_Attribute_child_image();
-       
-       
-        if($request->hasfile('product_Attribute_child_image')) {
-            foreach($request->file('product_Attribute_child_image') as $file)
-            {
-                $destinationPath = 'images/';
-                $name = $file->getClientOriginalName();
-                $file->move($destinationPath, $name);  
-                $imgData[] = $name;  
-               
-               
-                
-            }
-            $product_Attribute_child_image->product_id=$data->id;
-                
-            $product_Attribute_child_image->product_attr_id=$product_attribute->id;
-            $product_Attribute_child_image->product_attr_color_id= $product_attribute->color_id;
-            $product_Attribute_child_image->product_attribute_child_image = json_encode($imgData);
-        
-            $product_Attribute_child_image->save();
     
-           
+        
+     $inserted_data =  DB::table('product_attribute')->orderBy('id','desc')->first();
+ 
+     $inserted_id = $inserted_data->id;
+
+   
+    
         }
-       
+
+        // product__attribute_child_image is me sirf latest id store ho raha hai isko resolve krna hai
+
+        if ($files = $request->file('product_Attribute_child_image')){
+            $gallery=array();
+            foreach ($files as $file){
+                
+                $image_name =time().$file->getClientOriginalName();
+                $file->move('images/',$image_name);
+                $gallery['product_Attribute_child_image'] = $image_name;
+                $gallery['product_id']=$data->id;
+                $gallery['product_attr_id'] =$inserted_id;
+                DB::table('product__attribute_child_image')->insert($gallery);
+              
+           
+            }
+            
+        }
+
+     
+    }
+  
 
 
+
+
+
+    // product attribute child image code
+   
+  
+ 
+        
+        
+
+   
       
         
 
