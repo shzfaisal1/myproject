@@ -138,4 +138,17 @@ Route::group(['middleware' => 'isAdmin'],function(){
 
 
 });
+
+
+Route::prefix('customer')->group(function(){
+    Route::get('/list',[App\Http\Controllers\CustomerListController::class,'index'])->name('customer.list');
+    Route::get('/delete/{id}',[App\Http\Controllers\CustomerListController::class,'destroy'])->name('delete.list');
+    Route::get('/status/{status}/{id}',[App\Http\Controllers\CustomerListController::class,'status'])->name('customer.status');
+
+
+
+   
+
+
+});
 });
