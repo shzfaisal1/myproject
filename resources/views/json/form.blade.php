@@ -78,6 +78,7 @@ $(document).ready(function(){
          }
    });
   
+   
     $.ajax({
            url:"/save",
             type:"POST",
@@ -91,6 +92,8 @@ $(document).ready(function(){
       
     }
   });
+
+
   });  $('#country').change(function(e){
 
 e.preventDefault;

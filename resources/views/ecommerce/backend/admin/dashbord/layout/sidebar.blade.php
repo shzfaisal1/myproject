@@ -33,8 +33,8 @@
                                 <i class="fas fa-tag"></i>PRODUCT</a>
                         </li>
                         <li>
-                            <a href="{{route('list.brand')}}">
-                                <i class="fas fa-tag"></i>BRAND</a>
+                            <a href="{{route('customer.list')}}">
+                                <i class="fas fa-user"></i>CUSTOMER</a>
                         </li>
                     </ul>
                 </nav>

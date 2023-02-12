@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('admin.dashboard');
-});
+// Route::get('/', function () {
+//     return view('admin.dashboard');
+// });
 
-
+Route::get('/',[App\Http\Controllers\FrontController::class,'home']);
 
 
 Route::get('image-upload',[App\Http\Controllers\ImageController::class,'index']);
@@ -143,6 +143,23 @@ Route::group(['middleware' => 'isAdmin'],function(){
 
     // for status (active/deactive)
     Route::get('/status/{status_digit}/{id}',[App\Http\Controllers\BrandController::class,'status']);
+   
+
+
+});
+
+
+Route::prefix('customer')->group(function(){
+    Route::get('/list',[App\Http\Controllers\CustomerListController::class,'index'])->name('customer.list');
+    Route::get('/delete/{id}',[App\Http\Controllers\CustomerListController::class,'destroy'])->name('delete.list');
+    Route::get('/status/{status}/{id}',[App\Http\Controllers\CustomerListController::class,'status'])->name('customer.status');
+    Route::get('/view/{id}',[App\Http\Controllers\CustomerListController::class,'Customer_view'])->name('customer.view');
+    Route::get('/edit/{id}',[App\Http\Controllers\CustomerListController::class,'edit']);
+
+
+
+
+
    
 
 
