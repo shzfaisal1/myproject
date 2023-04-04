@@ -163,11 +163,10 @@
 
 
         <div class="form-group">
-            <label for="cc-number" class="control-label mb-1">technical specification</label>
-            <input id="technical_specification" name="technical_specification" type="text"
-                class="form-control cc-number identified visa" value="" data-val="true"
-                data-val-required="Please enter the card number" data-val-cc-number="Please enter a valid card number"
-                autocomplete="cc-number">
+            <label for="cc-number" class="control-label mb-1"> Technical Specification</label>
+            <textarea id="technical_specification" name="technical_specification" type="text" class="form-control cc-number identified visa" value=""
+                data-val="true" data-val-required="Please enter the card number"
+                data-val-cc-number="Please enter a valid card number" autocomplete="cc-number"></textarea>
             <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
         </div>
         @error('technical_specification')
@@ -175,7 +174,6 @@
             {{$message}}
         </div>
         @enderror
-
 
         <div class="form-group">
             <label for="cc-number" class="control-label mb-1">uses</label>
@@ -205,25 +203,96 @@
         </div>
         @enderror
 
+        <div class="form-group">
+            <div class="row">
+            <div class="col-md-4">
+        <label for="cc-number" class="control-label mb-1">Lead Time</label>
+            <input id="lead_time" name="lead_time" type="text" class="form-control cc-number identified visa" value=""
+                data-val="true" 
+                data-val-cc-number="Please enter a valid card number" autocomplete="cc-number"> 
+            </div>
+
+        <div class="col-md-4">
+        <label for="cc-number" class="control-label mb-1">Tax</label>
+            <input id="tax" name="tax" type="text" class="form-control cc-number identified visa" value=""
+                data-val="true" data-val-required="Please enter the card number"
+                data-val-cc-number="Please enter a valid card number" autocomplete="cc-number">
+        </div>
+       
+            <div class="col-md-4">
+            <label for="cc-number" class="control-label mb-1">Tax Type</label>
+            <input id="tax_type" name="tax_type" type="text" class="form-control cc-number identified visa" value=""
+                data-val="true" data-val-required="Please enter the card number"
+                data-val-cc-number="Please enter a valid card number" autocomplete="cc-number">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+            <div class="col-md-3">
+            <label for="is_promo" class="control-label mb-1">Is Promo </label>
+            <select name="is_promo" id="is_promo" class="form-control">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+
+
+            
+            </select>
+            </div>
+            
+        <div class="col-md-3">
+        <label for="is_featured" class="control-label mb-1">Is Featured </label>
+            <select name="is_featured" id="is_featured" class="form-control">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+
+
+            
+            </select>
+        </div>
+       
+        <div class="col-md-3">
+        <label for="is_discounted" class="control-label mb-1">Is Discounted </label>
+            <select name="is_discounted" id="is_discounted" class="form-control">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+
+
+            
+            </select>
+        </div>
+
+        <div class="col-md-3">
+        <label for="is_tranding" class="control-label mb-1">Is Trending </label>
+            <select name="is_tranding" id="is_tranding" class="form-control">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+
+
+            
+            </select>
+        </div>
+        </div>
         <!-- product attribute -->
 
 
-
+        <br>
 
 
         <center>
+       
             <!-- if there is multiple data to store use [] (its define it is an array) in name attribte  -->
         <h3 class="text-center title-2">Product Attribute</h3>
             <div class="col-lg-8">
-                
-
-                <div class="card" id="product_attr">
-
-                    <div class="card-body">
-                        <button type="button" id="add_more" class="btn btn-primary" style="margin-left: -387px;">Add
+            <button type="button" id="add" onclick="add_more()" class="btn btn-primary" style="margin-left: -387px;">Add
                             More
                             <i class="fa fa-plus"></i>
                         </button>
+
+                <div class="card" id="product_attr">
+               
+                    <div class="card-body">
+                      
 
                         <hr>
 
@@ -350,12 +419,24 @@
 
     @endsection
 
-    @section('javascript')
-    <script>
-    $(document).ready(function() {
-        $("#add_more").click(function() {
 
-          var html='<div class="card" id="product_attr"> <div class="card-body">';
+    <!-- if ypu want to define variable in function its not consider 
+    you have define out of function in any lan; -->
+    @section('javascript')
+ 
+    <script>
+
+
+  
+
+        let loop_count=1;
+       
+        function add_more(){
+            // jitni baar click hoga count badhta rehga;
+            loop_count++;
+          var html='<div class="card" id="product_attr'+loop_count +'"> <div class="card-body">';
+          html+='<h2> Product Attribute</h2>';
+          html+='<button type="button" id="romove_attr"  class="btn btn-danger" style="margin-left: -387px;"  onclick=remove_more("'+loop_count+'")>Remove <i class="fa fa-minus"></i> </button>';
           html+='<div class="form-group"> <label for="cc-payment" class="control-label mb-1">sku</label> <input id="cc-pament" name="sku[]" type="text" class="form-control" aria-required="true" aria-invalid="false"> </div>'
           html+=' <div class="row"><div class="col-lg-6"><div class="form-group has-success"><label for="cc-name" class="control-label mb-1">Image</label><input id="image" name="attribute_image[]" type="file" class="form-control cc-name valid" data-val="true"data-val-required="Please enter the name on card" autocomplete="cc-name"aria-required="true" aria-invalid="false" aria-describedby="cc-name-error"><span class="help-block field-validation-valid" data-valmsg-for="cc-name" data-valmsg-replace="true"></span></div></div><div class="col-lg-6"><div class="form-group"><label for="prodduct_child_image" class="control-label mb-1">Product Attribute Child Image</label><input id="product_Attribute_child_image" name="product_Attribute_child_image[]" type="file" class="form-control cc-number identified visa" value="" data-val="true" multiple><span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span> </div> </div></div>';                         
           html+='<div class="form-group"><label for="cc-number" class="control-label mb-1">Price</label><input id="cc-number" name="price[]" type="number"class="form-control cc-number identified visa" value="" data-val="true"data-val-required="Please enter the card number"data-val-cc-number="Please enter a valid card number" autocomplete="cc-number"><span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span></div>';
@@ -369,7 +450,18 @@
           $("#product_attr").append(html);
          
 
-        });
-    });
-    </script>
+        }
+        function remove_more(loop_count){
+
+
+   $("#product_attr"+loop_count).remove();
+}
+    
+    CKEDITOR.replace('short_desc');
+    CKEDITOR.replace('desc');
+    CKEDITOR.replace('technical_specification');
+
+
+</script>
+  
     @endsection

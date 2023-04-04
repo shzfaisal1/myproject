@@ -31,7 +31,11 @@
                                                 <th>#id</th>
                                                 <th>Title</th>
                                                 <th>Code</th>
-                                                <th>Calue</th>
+                                                <th>Value</th>
+                                                <th>Type</th>
+                                                <th>Minimum Order Amount</th>
+                                                <th>Is One Time</th>
+
                                                 <th>Action</th>
                                                 <th>Action</th>
                                                 <th>status</th>
@@ -39,11 +43,23 @@
                                         </thead>
                                         <tbody>
                                             @foreach($data as $list)
+                                            @php
+                                           if( $list->is_one_time==1){
+                                            $list->is_one_time= "yes"   ;
+                                           }else{
+                                            $list->is_one_time= "NO"   ;
+                                           }
+                                            @endphp
                                             <tr>
                                                 <td>{{$list->id}}</td>
                                                 <td>{{$list->Title}}</td>
                                                 <td>{{$list->Code}}</td>
-                                                <td>{{$list->Calue}}</td>
+                                                <td>{{$list->value}}</td>
+                                                <td>{{$list->type}}</td>
+                                                <td>{{$list->min_order_amt}}</td>
+                                                <td>{{$list->is_one_time}}</td>
+                                               
+
 
                                                 <td><a href="{{url('coupon/edit')}}/{{$list->id}}"> <button type="button" class="btn btn-success">edit</button></a></td>
 

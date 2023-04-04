@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\coupon;
 use Illuminate\Http\Request;
-
+use DB;
 class CouponController extends Controller
 {
     /**
@@ -25,7 +25,8 @@ class CouponController extends Controller
      */
     public function create()
     {
-        return view('ecommerce\backend\admin\dashbord\coupan\create');
+        $values=coupon::all();
+        return view('ecommerce\backend\admin\dashbord\coupan\create',compact('values'));
     }
 
     /**
@@ -42,7 +43,7 @@ class CouponController extends Controller
             'Title'  => 'required',
             'Code' =>'required|unique:coupons',
             'Title'  => 'required',
-            'Calue'  => 'required',
+            'value'  => 'required',
         ]);
         coupon::create($request->all());
 
@@ -85,7 +86,11 @@ class CouponController extends Controller
         $data=coupon::find($id);
         $data->Title= $request->Title;
         $data->Code= $request->Code;
-        $data->Calue= $request->Calue;
+        $data->value= $request->value;
+        $data->type= $request->type;
+        $data->min_order_amt= $request->min_order_amt;
+        $data->is_one_time= $request->is_one_time;
+
         $data->save();
 
         return redirect('coupon/list')->with('updated','Coupon has been updated');

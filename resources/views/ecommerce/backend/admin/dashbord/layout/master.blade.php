@@ -197,7 +197,8 @@
      <script src="{{asset('assets1/vendor/circle-progress/circle-progress.min.js')}}"></script>
      <script src="{{asset('assets1/vendor/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
      <script src="{{asset('assets1/vendor/chartjs/Chart.bundle.min.js')}}"></script>
-     <script src="{{asset('assets1/vendor/select2/select2.min.js')}}">
+     <script src="{{asset('assets1/vendor/select2/select2.min.js')}}"> </script>
+     <script src="{{asset('/ckeditor/ckeditor.js')}}">
      </script>
  
      <!-- Main JS-->
@@ -205,6 +206,7 @@
 
        
      </script>
+     
    
  @yield('javascript')
 

@@ -99,42 +99,20 @@
               <!-- promo right -->
               <div class="col-md-7 no-padding">
                 <div class="aa-promo-right">
+                 
+                @foreach($result['home_category'] as $list)
                   <div class="aa-single-promo-right">
                     <div class="aa-promo-banner">                      
-                      <img src="{{asset('front_asset/img/promo-banner-3.jpg')}}" alt="img">                      
-                      <div class="aa-prom-content">
-                        <span>Exclusive Item</span>
-                        <h4><a href="#">For Men</a></h4>                        
-                      </div>
-                    </div>
-                  </div>
-                  <div class="aa-single-promo-right">
-                    <div class="aa-promo-banner">                      
-                      <img src="{{asset('front_asset/img/promo-banner-2.jpg')}}" alt="img">                      
-                      <div class="aa-prom-content">
-                        <span>Sale Off</span>
-                        <h4><a href="#">On Shoes</a></h4>                        
-                      </div>
-                    </div>
-                  </div>
-                  <div class="aa-single-promo-right">
-                    <div class="aa-promo-banner">                      
-                      <img src="{{asset('front_asset/img/promo-banner-4.jpg')}}" alt="img">                      
-                      <div class="aa-prom-content">
-                        <span>New Arrivals</span>
-                        <h4><a href="#">For Kids</a></h4>                        
-                      </div>
-                    </div>
-                  </div>
-                  <div class="aa-single-promo-right">
-                    <div class="aa-promo-banner">                      
-                      <img src="{{asset('front_asset/img/promo-banner-5.jpg')}}" alt="img">                      
+                    <img src="{{asset('/images/'.$list->category_image)}}" width="200px">                    
                       <div class="aa-prom-content">
                         <span>25% Off</span>
-                        <h4><a href="#">For Bags</a></h4>                        
+                        <h4><a href="{{url('category/'.$list->category_slug)}}">{{$list->category_name}}</a></h4>                        
                       </div>
                     </div>
                   </div>
+                  @endforeach
+                 
+                 
                 </div>
               </div>
             </div>
@@ -154,10 +132,9 @@
               <div class="aa-product-inner">
                 <!-- start prduct navigation -->
                  <ul class="nav nav-tabs aa-products-tab">
-                    <li class="active"><a href="#men" data-toggle="tab">Men</a></li>
-                    <li><a href="#women" data-toggle="tab">Women</a></li>
-                    <li><a href="#sports" data-toggle="tab">Sports</a></li>
-                    <li><a href="#electronics" data-toggle="tab">Electronics</a></li>
+                  @foreach($result['home_category'] as $list)
+                    <li><a href="#{{$list->id}}" data-toggle="tab">{{$list->category_name}}</a></li>
+                    @endforeach
                   </ul>
                   <!-- Tab panes -->
                   <div class="tab-content">

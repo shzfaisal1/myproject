@@ -12,3 +12,8 @@ class Product_Child_Image extends Model
     protected $table="product__child__images";
     protected $fillable=['product_child_image','product_id','product_attr_id','product_attr_color_id'];
 }
+
+
+
+
+  

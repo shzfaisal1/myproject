@@ -27,7 +27,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('ecommerce\backend\admin\dashbord\category\create');
+        $data=DB::table('categories')->where('status','1')->get();
+        return view('ecommerce\backend\admin\dashbord\category\create',compact('data'));
     }
 
     /**
@@ -53,7 +54,31 @@ class CategoryController extends Controller
             'category_name'  => 'required',
             'category_slug' =>'required|unique:categories'
         ]);
-        Category::create($req->all());
+        // if ($image = $req->file('category_image')) {
+        //     $destinationPath = 'category_images/';
+        //     $category_image = date('YmdHis') . "." . $image->getClientOriginalExtension();
+        //     $image->move($destinationPath, $category_image->name);
+        //     $req['category_image'] = "$category_image";
+        // }
+$data=new Category();
+     
+      
+       
+      
+        $data->category_name=$req->category_name;
+        $data->category_slug=$req->category_slug;
+        $data->parent_category_id=$req->parent_category_id;
+
+        if($file = $req->hasFile('category_image')) {
+            $file = $req->file('category_image') ;
+            $fileName = $file->getClientOriginalName() ;
+            $destinationPath = public_path().'/category_images/' ;
+            $file->move($destinationPath,$fileName);
+            $data->category_image =$fileName ;
+           
+        }
+
+        $data->save();
        return redirect('/category/list')->with('added','Category Has Been Inserted');
     }
 
@@ -66,9 +91,9 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $data=Category::find($id);
-       
+        $cat_parent_id=Category::all();
       
-        return view('ecommerce.backend.admin.dashbord.category.edit',compact('data'));
+        return view('ecommerce.backend.admin.dashbord.category.edit',compact('data','cat_parent_id'));
     }
 
     /**
@@ -78,14 +103,26 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $req,$id)
     {
        
-
+// dd($req->all());
 
         $data=Category::find($id);
-        $data->category_name=$request->category_name;
-        $data->category_slug=$request->category_slug; 
+      
+        $data->category_name=$req->category_name;
+        $data->category_slug=$req->category_slug;
+        $data->parent_category_id=$req->parent_category_id;
+
+        if($file = $req->hasFile('category_image')) {
+            $file = $req->file('category_image') ;
+            $fileName = $file->getClientOriginalName() ;
+            $destinationPath = public_path().'/category_images/' ;
+            $file->move($destinationPath,$fileName);
+            $data->category_image =$fileName ;
+           
+        }
+
         $data->save();
         return redirect('/category/list')->with('updated','Category Has Been updated');
         
