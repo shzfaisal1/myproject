@@ -36,6 +36,7 @@ class ComposerStaticInit9c2cea99043c022bf724291d91a7a5c9
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
         '320163ac6b93aebe3dc25b60a0533d56' => __DIR__ . '/..' . '/spatie/laravel-ignition/src/helpers.php',
+        '6b7473a5108322fed1c4a2e8a540e0fc' => __DIR__ . '/../..' . '/app/helper/nestedcategory.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -555,6 +556,9 @@ class ComposerStaticInit9c2cea99043c022bf724291d91a7a5c9
         'App\\Http\\Controllers\\ColorController' => __DIR__ . '/../..' . '/app/Http/Controllers/ColorController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\CouponController' => __DIR__ . '/../..' . '/app/Http/Controllers/CouponController.php',
+        'App\\Http\\Controllers\\CustomerListController' => __DIR__ . '/../..' . '/app/Http/Controllers/CustomerListController.php',
+        'App\\Http\\Controllers\\FrontController' => __DIR__ . '/../..' . '/app/Http/Controllers/FrontController.php',
+        'App\\Http\\Controllers\\HomeBannerController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeBannerController.php',
         'App\\Http\\Controllers\\ImageController' => __DIR__ . '/../..' . '/app/Http/Controllers/ImageController.php',
         'App\\Http\\Controllers\\JsonController' => __DIR__ . '/../..' . '/app/Http/Controllers/JsonController.php',
         'App\\Http\\Controllers\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/LoginController.php',
@@ -577,6 +581,7 @@ class ComposerStaticInit9c2cea99043c022bf724291d91a7a5c9
         'App\\Models\\Brand' => __DIR__ . '/../..' . '/app/Models/Brand.php',
         'App\\Models\\Category' => __DIR__ . '/../..' . '/app/Models/Category.php',
         'App\\Models\\Customer_list' => __DIR__ . '/../..' . '/app/Models/Customer_list.php',
+        'App\\Models\\HomeBanner' => __DIR__ . '/../..' . '/app/Models/HomeBanner.php',
         'App\\Models\\Product_Child_Image' => __DIR__ . '/../..' . '/app/Models/Product_Child_Image.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\Users' => __DIR__ . '/../..' . '/app/Models/Users.php',

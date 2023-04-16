@@ -36,6 +36,14 @@
                             <a href="{{route('customer.list')}}">
                                 <i class="fas fa-user"></i>CUSTOMER</a>
                         </li>
+                        <li>
+                            <a href="{{route('list.brand')}}">
+                                <i class="fas fa-user"></i>BRAND</a>
+                        </li>
+                        <li>
+                            <a href="{{route('homebanner.list')}}">
+                                <i class="fas fa-user"></i>HOME BANNER</a>
+                        </li>
                     </ul>
                 </nav>
             </div>

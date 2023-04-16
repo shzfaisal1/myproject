@@ -12,22 +12,142 @@ class FrontController extends Controller
 
         $result['home_category']=DB::table('categories')->where('status','1')->where('is_home','1')->get();
        
-        echo "<pre>";
-        print_r( $result['home_category']);
-     
+    //     echo "<pre>";
+    //     print_r( $result['home_category']);
+    //  die;
 
         foreach($result['home_category'] as $list){
 
-            $result['home_category'][$list->id]  =DB::table('products')->where('id',$list->id)->get();
-            // echo "<pre>";
-            // print_r($list);
-            // die;                
+                // its fecth product data according to their categoryid
+                                         // this category id            product  according to their categoryid
+            $result['home_category_product'][$list->id]  =DB::table('products')->where('category_id',$list->id)->get();
+
+                
+            foreach($result['home_category_product'][$list->id]  as $list1){
+                // its fetching product attribute according to their product id
+
+                $result['home_product_attr'][$list1->id]=DB::table('product_attribute')
+               ->leftjoin('sizes','sizes.id','=','product_attribute.size_id')
+               ->leftjoin('colors','colors.id','=','product_attribute.color_id')
+                ->where('product_attribute.product_id',$list1->id)->get();
+
+            }
+            
+            $result['home_brnad'] =DB::table('brands')->where('status','1')->get();
+           
+        //  echo"<pre>";
+        //  print_r($result);
+        //  die;
+// 1
+// there is two ways
+// 2
+        $result['feature_product']=DB::table('products')
+        ->select('products.*','sizes.sizes as Size','colors.colours as Color','product_attribute.*')
+        ->join('product_attribute','products.id','=','product_attribute.product_id')
+        ->join('sizes','sizes.id','=','product_attribute.size_id')
+        ->join('colors','colors.id','=','product_attribute.color_id')
+        ->where(['products.is_featured'=>'1'])
+        ->get();
+
+
+        $result['trending_product']=DB::table('products')
+        ->select('products.*','sizes.sizes as Size','colors.colours as Color','product_attribute.*')
+        ->join('product_attribute','products.id','=','product_attribute.product_id')
+        ->join('sizes','sizes.id','=','product_attribute.size_id')
+        ->join('colors','colors.id','=','product_attribute.color_id')
+        ->where(['products.is_tranding'=>'1'])
+        ->get();
+
+
+        $result['discounted_pro']=DB::table('products')->where('is_discounted','1')->get();
+
+        foreach($result['discounted_pro'] as $dis_product){
+
+            $result['is_discounted'][$dis_product->id]=DB::table('product_attribute')
+            ->leftjoin('sizes','sizes.id','=','product_attribute.size_id')
+            ->leftjoin('colors','colors.id','=','product_attribute.color_id')
+             ->where('product_attribute.product_id',$dis_product->id)->get();
         }
-        echo "<pre>";
-        print_r($result['home_category']);
-        die; 
-                        
+      
+
+        $result['home_banner']=DB::table('homebanner')->where('status','1')->get();
+        //     echo"<pre>";
+        //  print_r($result['home_banner']);
+        //  die;
+        }
+     
+
+
+
+
+        // $result['cat_demo']=DB::table('demo_category')->where('parent_category','0')->get();
+        //   foreach($result['cat_demo'] as $list) {
+           
+        //     $result['cat_sub'][$list->id]=DB::table('demo_category')->where('parent_category',$list->id)->get();
+
+        //     foreach($result['cat_sub'][$list->id] as $list1){
+        //         // echo"<pre>";
+        //         // print_r($list1->parent_category);
+                
+        //     $result['cat_final'][$list1->id]=DB::table('demo_category')->where('parent_category',$list1->id)->get();
+
+        //     }
+            
+        //   }   
+        // Nested category functionality
+        
+        $result['main_cat']=DB::table('categories')->where('status','1')->where('parent_category_id','0')->get();
+           
+        foreach( $result['main_cat'] as $main_list){
+         $result['sub_cat'][$main_list->id]=DB::table('categories')->where('parent_category_id',$main_list->id)->get();
+        }
+
+        // prnt($result['sub_cat']);
+        //         echo"<pre>";
+        //  print_r($result['sub_cat']);
+         
+           
 return view('ecommerce.frontend.home',compact('result'));
 
+    }
+
+
+  
+
+
+    function productDetail($slug,$id){
+
+        $result['product_detail']=DB::table('products')
+        ->select('products.*','sizes.sizes as Size','colors.colours as Color','product_attribute.*','product__child__images.*')
+        ->join('product_attribute','product_attribute.product_id','=','products.id')
+        ->join('sizes','sizes.id','product_attribute.size_id')
+        ->join('colors','colors.id','product_attribute.color_id')
+        ->join('product__child__images','product__child__images.product_id','products.id')
+        ->where('products.slug',$slug)
+        ->get();
+        
+
+        $row=DB::table('product__child__images')->where('product_id',$id)->first();
+        
+        
+        
+
+        $images = json_decode($row->product_child_image);
+        
+    //     foreach ($images as $image) {
+    //       echo"<pre>";
+    //       print_r($image);
+          
+    //     }
+        
+    //    die();
+
+
+        $result['main_cat']=DB::table('categories')->where('status','1')->where('parent_category_id','0')->get();
+           
+        foreach( $result['main_cat'] as $main_list){
+         $result['sub_cat'][$main_list->id]=DB::table('categories')->where('parent_category_id',$main_list->id)->get();
+        }
+        return view('ecommerce.frontend.product',compact('result','images'));
     }
 }

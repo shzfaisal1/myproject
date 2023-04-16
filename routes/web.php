@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[App\Http\Controllers\FrontController::class,'home']);
 
+Route::get('/product/{slug}/{id}',[App\Http\Controllers\FrontController::class,'productDetail']);
 
 Route::get('image-upload',[App\Http\Controllers\ImageController::class,'index']);
 Route::post('image-upload',[App\Http\Controllers\ImageController::class,'store'])->name('image.store');
@@ -164,4 +165,24 @@ Route::prefix('customer')->group(function(){
 
 
 });
+
+
+Route::prefix('homebanner')->group(function(){
+    
+    Route::get('/list',[App\Http\Controllers\HomeBannerController::class,'index'])->name('homebanner.list');
+    Route::get('/create',[App\Http\Controllers\HomeBannerController::class,'create'])->name('homebanner.create');
+    Route::post('/store',[App\Http\Controllers\HomeBannerController::class,'store'])->name('homebanner.store');
+    Route::get('/delete/{id}',[App\Http\Controllers\HomeBannerController::class,'delete'])->name('homebanner.delete');
+    Route::get('/edit/{id}',[App\Http\Controllers\HomeBannerController::class,'edit'])->name('homebanner.edit');
+    Route::post('/update/{id}',[App\Http\Controllers\HomeBannerController::class,'update'])->name('homebanner.update');
+
+
+
+   
+});
+
+
+
+
+
 });

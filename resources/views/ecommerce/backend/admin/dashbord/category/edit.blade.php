@@ -40,7 +40,7 @@
                                 <label for="parent_category_id" class="control-label mb-1">Parent Category</label>
                             <select name="parent_category_id" id="parent_category_id" class="form-control">
                                @foreach($cat_parent_id as $list)
-                         @if($list->id==$data->id)
+                         @if($list->id==$data->parent_category_id)
                             <option value="{{$list->id}}" selected>{{$list->category_name}}</option>
                          @else
                          <option value="{{$list->id}}" >{{$list->category_name}}</option>

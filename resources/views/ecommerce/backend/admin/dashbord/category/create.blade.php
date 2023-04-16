@@ -37,6 +37,7 @@
                                                         <div class="form-group">
                                 <label for="parent_category_id" class="control-label mb-1">Parent Category</label>
                             <select name="parent_category_id" id="parent_category_id" class="form-control">
+                            <option value="0">select as main Category</option>
                                @foreach($data as $list)
                             <option value="{{$list->id}}">{{$list->category_name}}</option>
                                @endforeach
