@@ -138,13 +138,14 @@ class ProductController extends Controller
 
             if($request->hasFile("attribute_image.$key")){
                 $rand=rand('111111111','999999999');
-                $attr_image=$request->file("attribute_image.$key");
-                $ext=$attr_image->extension();
-                 
-                $image_name=$rand.'.'.$ext;
+                $attr_image=$request->file("attribute_image.$key")->getClientOriginalName();
+                // $ext=$attr_image->extension();
+                $destinationPath = 'product_attr/';
+                // $image_name=$rand.'.'.$ext;
                
-                $request->file("attribute_image.$key")->storeAs('/public/media',$image_name);
-            $product_attribute['attribute_image']=$image_name;
+                // $request->file("attribute_image.$key")->storeAs('/public/media',$image_name);
+                $request->file("attribute_image.$key")->move($destinationPath,$attr_image);
+            $product_attribute['attribute_image']=$attr_image;
 
                
             }

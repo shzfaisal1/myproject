@@ -90,5 +90,7 @@
   <!-- Custom js -->
   <script src="{{asset('front_asset/js/custom.js')}}"></script> 
 
+  @yield('js')
+
   </body>
 </html>
